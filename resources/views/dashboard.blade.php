@@ -87,7 +87,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="./index.html" class="nav-link active">
+                                    <a href={{ route('patient_register') }} class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Registration</p>
                                     </a>
@@ -204,28 +204,52 @@
                     <!-- Main row -->
                     <div class="row">
                         <!-- Left col -->
-                        <section class="col-lg-7 connectedSortable">
+                        <section class="col-lg-12 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">
                                         <i class="fas fa-chart-pie mr-1"></i>
-                                        Sales
+                                        Patient
                                     </h3>
                                     <div class="card-tools">
                                         <ul class="nav nav-pills ml-auto">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                                                <!-- <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Add</a> -->
+                                                <a data-target="#addPatient" data-toggle="modal" class="nav-link active" id="nav-link active" href="#addPatient">Add</a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                                            </li>
+
                                         </ul>
                                     </div>
                                 </div><!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="tab-content p-0">
+                                    <div class="col-md-12 mb-4">
+    <div class="card text-left">
 
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table id="multicolumn_ordering_table" class="display table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>First Name</th>
+                            <th>Last Type</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+
+
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
                                     </div>
                                 </div><!-- /.card-body -->
                             </div>
@@ -240,6 +264,60 @@
             </section>
             <!-- /.content -->
         </div>
+
+        <!-- end of col -->
+<div id="addPatient" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <div class="card-title mb-3">Patient Information</div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+
+                            <form role="form" method="post" action="{{route('add_patient')}}">
+                                {{ csrf_field() }}
+                                <div class="row">
+                                    <input type="hidden" name="id" id="id">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="firstName1">First Name</label>
+                                        <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First name">
+                                    </div>
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="firstName1">Last Name</label>
+                                        <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last Name">
+                                    </div>
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="firstName1">Phone No</label>
+                                        <input type="text" required="" name="phone" pattern="^(([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$" placeholder="Phone No should be 10 Digits " id="phone_no" class="input-rounded input-sm form-control phone_no" />
+                                    </div>
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="firstName1">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                                    </div>
+
+
+                                </div>
+                                <button type="submit" class="btn btn-block btn-primary">Submit</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <strong>Copyright &copy; 2021 </a>.</strong>
