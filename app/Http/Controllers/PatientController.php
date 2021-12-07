@@ -11,7 +11,8 @@ class PatientController extends Controller
     public function index()
     {
         $patient_data = Patient::all();
-        return view('patient.register', compact('patient_data'));
+        // dd($patient_data);
+        return view('dashboard', compact('patient_data'));
     }
 
     public function add_patient(Request $request)

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Covid Screening | Dashboard</title>
 
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -139,65 +140,52 @@
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
                     <div class="row">
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-4 col-6">
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3></h3>
+                                    <h3>{{count($patient_data)}}</h3>
 
-                                    <p></p>
+                                    <p>Total Visits</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-bag"></i>
+
                                 </div>
 
                             </div>
                         </div>
                         <!-- ./col -->
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-4 col-6">
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3></h3>
+                                    <h3>{{count($patient_data)}}</h3>
 
-                                    <p></p>
+                                    <p>No of Patients in Queue</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
+
                                 </div>
 
                             </div>
                         </div>
                         <!-- ./col -->
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-4 col-6">
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3></h3>
+                                    <h3>{{count($patient_data)}}</h3>
 
-                                    <p></p>
+                                    <p>No of Screened Patients</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+
                                 </div>
 
                             </div>
                         </div>
                         <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-danger">
-                                <div class="inner">
-                                    <h3></h3>
 
-                                    <p></p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-
-                            </div>
-                        </div>
                         <!-- ./col -->
                     </div>
                     <!-- /.row -->
@@ -224,32 +212,45 @@
                                 </div><!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="tab-content p-0">
-                                    <div class="col-md-12 mb-4">
-    <div class="card text-left">
+                                        <div class="col-md-12 mb-4">
+                                            <div class="card text-left">
 
-        <div class="card-body">
+                                                <div class="card-body">
 
-            <div class="table-responsive">
-                <table id="multicolumn_ordering_table" class="display table table-striped table-bordered" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>First Name</th>
-                            <th>Last Type</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                        </tr>
-                    </thead>
+                                                    <div class="table-responsive">
+                                                        <table id="patient_info" class="display table table-striped table-bordered" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No.</th>
+                                                                    <th>First Name</th>
+                                                                    <th>Last Name</th>
+                                                                    <th>Phone</th>
+                                                                    <th>Address</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (count($patient_data) > 0)
+                                                                @foreach($patient_data as $patient)
+                                                                <tr>
+                                                                    <td>{{$loop->iteration}}</td>
+                                                                    <td>{{$patient->f_name}}</td>
+                                                                    <td>{{$patient->l_name}}</td>
+                                                                    <td>{{$patient->phone}}</td>
+                                                                    <td>{{$patient->address}}</td>
+                                                                </tr>
+                                                                @endforeach
+                                                                @endif
+                                                            </tbody>
 
 
 
-                </table>
+                                                        </table>
 
-            </div>
+                                                    </div>
 
-        </div>
-    </div>
-</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div><!-- /.card-body -->
                             </div>
@@ -266,58 +267,58 @@
         </div>
 
         <!-- end of col -->
-<div id="addPatient" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+        <div id="addPatient" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
 
-                <div class="card-title mb-3">Patient Information</div>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-body">
+                        <div class="card-title mb-3">Patient Information</div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <div class="card-body">
 
-                            <form role="form" method="post" action="{{route('add_patient')}}">
-                                {{ csrf_field() }}
-                                <div class="row">
-                                    <input type="hidden" name="id" id="id">
-                                    <div class="col-md-6 form-group mb-3">
-                                        <label for="firstName1">First Name</label>
-                                        <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First name">
-                                    </div>
-                                    <div class="col-md-6 form-group mb-3">
-                                        <label for="firstName1">Last Name</label>
-                                        <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last Name">
-                                    </div>
-                                    <div class="col-md-6 form-group mb-3">
-                                        <label for="firstName1">Phone No</label>
-                                        <input type="text" required="" name="phone" pattern="^(([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$" placeholder="Phone No should be 10 Digits " id="phone_no" class="input-rounded input-sm form-control phone_no" />
-                                    </div>
-                                    <div class="col-md-6 form-group mb-3">
-                                        <label for="firstName1">Address</label>
-                                        <input type="text" class="form-control" id="address" name="address" placeholder="Address">
-                                    </div>
+                                    <form role="form" method="post" action="{{route('add_patient')}}">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <input type="hidden" name="id" id="id">
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName1">First Name</label>
+                                                <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First name">
+                                            </div>
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName1">Last Name</label>
+                                                <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last Name">
+                                            </div>
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName1">Phone No</label>
+                                                <input type="text" required="" name="phone" pattern="^(([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$" placeholder="Phone No should be 10 Digits " id="phone_no" class="input-rounded input-sm form-control phone_no" />
+                                            </div>
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName1">Address</label>
+                                                <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                                            </div>
 
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary float-right">Submit</button>
+                                    </form>
 
                                 </div>
-                                <button type="submit" class="btn btn-block btn-primary">Submit</button>
-                            </form>
-
+                            </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
             </div>
         </div>
-
-    </div>
-</div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <strong>Copyright &copy; 2021 </a>.</strong>
@@ -336,6 +337,7 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
+    <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -369,6 +371,26 @@
     <script src="dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dist/js/pages/dashboard.js"></script>
+    <script type="text/javascript">
+    $('#patient_info').DataTable({
+        columnDefs: [{
+            targets: [0],
+            orderData: [0, 1]
+        }, {
+            targets: [1],
+            orderData: [1, 0]
+        }, {
+            targets: [4],
+            orderData: [4, 0]
+        }],
+        "paging": true,
+        "responsive":true,
+        "ordering": true,
+        "info": true,
+        dom: 'Bfrtip',
+
+    });
+</script>
 </body>
 
 </html>

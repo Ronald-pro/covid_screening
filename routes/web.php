@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-Route::get('/patient_register', ['uses' => 'App\Http\Controllers\PatientController@index', 'as' => 'patient_register']);
+Route::get('/', ['uses' => 'App\Http\Controllers\PatientController@index', 'as' => 'patient_register']);
 Route::post('/add_patient', ['uses' => 'App\Http\Controllers\PatientController@add_patient', 'as' => 'add_patient']);
 
 
